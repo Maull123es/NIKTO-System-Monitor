@@ -177,10 +177,7 @@ nikto-monitor/
 |----------|---------------|--------------------------|
 | Flask    | `>=3.0,<4.0`  | HTTP server and routing  |
 | psutil   | `>=5.9,<7.0`  | System metrics           |
-```
+
 ## Author
 
-```
-Jana Maulana Fajar 
-```
-Made with 💕
+Jana Maulana Fajar 🤓 💕
