@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NIKTO System Monitor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Loading overlay (shown until first successful poll) ──────────── -->
+  <div id="loading-overlay">
+    <div class="loading-box">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Connecting to monitor…</div>
+    </div>
+  </div>
+
+  <!-- ── Error banner (shown on poll failure) ─────────────────────────── -->
+  <div id="error-banner" hidden>
+    <span id="error-msg">Connection lost — retrying…</span>
+    <button id="error-dismiss">✕</button>
+  </div>
+
+  <header>
+    <div class="header-left">
+      <span class="logo">◈ NIKTO</span>
+      <span class="subtitle" id="hostname">System Monitor</span>
+    </div>
+    <div class="header-right">
+      <span class="pill" id="os-name">—</span>
+      <span class="pill" id="uptime">—</span>
+      <span class="status-dot" id="status-dot" title="Connection status"></span>
+    </div>
+  </header>
+
+  <main>
+    <!-- ── Row 1: KPI cards ─────────────────────────────────────────── -->
+    <section class="kpi-row">
+      <div class="card kpi" id="card-cpu">
+        <div class="kpi-label">CPU</div>
+        <div class="kpi-value" id="cpu-percent">—</div>
+        <div class="kpi-sub" id="cpu-freq">—</div>
+        <div class="bar-track"><div class="bar-fill" id="bar-cpu"></div></div>
+      </div>
+
+      <div class="card kpi" id="card-ram">
+        <div class="kpi-label">RAM</div>
+        <div class="kpi-value" id="ram-percent">—</div>
+        <div class="kpi-sub" id="ram-detail">—</div>
+        <div class="bar-track"><div class="bar-fill" id="bar-ram"></div></div>
+      </div>
+
+      <div class="card kpi" id="card-swap">
+        <div class="kpi-label">SWAP</div>
+        <div class="kpi-value" id="swap-percent">—</div>
+        <div class="kpi-sub" id="swap-detail">—</div>
+        <div class="bar-track"><div class="bar-fill" id="bar-swap"></div></div>
+      </div>
+
+      <div class="card kpi" id="card-temp">
+        <div class="kpi-label">TEMP</div>
+        <div class="kpi-value" id="cpu-temp">—</div>
+        <div class="kpi-sub" id="cpu-temp-src">—</div>
+        <div class="bar-track"><div class="bar-fill" id="bar-temp"></div></div>
+      </div>
+
+      <div class="card kpi" id="card-load">
+        <div class="kpi-label">LOAD AVG</div>
+        <div class="kpi-value" id="load-1">—</div>
+        <div class="kpi-sub" id="load-detail">—</div>
+        <div class="bar-track"><div class="bar-fill" id="bar-load"></div></div>
+      </div>
+    </section>
+
+    <!-- ── Row 2: CPU cores + CPU history ──────────────────────────── -->
+    <section class="grid-2">
+      <div class="card">
+        <div class="card-title">CPU Cores</div>
+        <div id="cpu-cores"></div>
+        <div class="cpu-meta" id="cpu-model">—</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">CPU History <span class="muted">(60 s)</span></div>
+        <canvas id="cpu-chart" height="90"></canvas>
+      </div>
+    </section>
+
+    <!-- ── Row 3: Disk + Network ────────────────────────────────────── -->
+    <section class="grid-2">
+      <div class="card">
+        <div class="card-title">Disk</div>
+        <div id="disk-list"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Network
+          <span class="muted" id="net-throughput-summary"></span>
+        </div>
+        <div id="network-list"></div>
+      </div>
+    </section>
+
+    <!-- ── Row 4: Processes ─────────────────────────────────────────── -->
+    <section class="card">
+      <div class="card-title-row">
+        <span class="card-title">Processes</span>
+        <span class="muted" id="proc-total"></span>
+        <div class="sort-toggle">
+          Sort by:
+          <button class="sort-btn active" id="sort-cpu" onclick="setSortBy('cpu')">CPU</button>
+          <button class="sort-btn" id="sort-mem" onclick="setSortBy('memory')">Memory</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="proc-table">
+          <thead>
+            <tr>
+              <th>PID</th>
+              <th>Name</th>
+              <th>User</th>
+              <th>Status</th>
+              <th>CPU %</th>
+              <th>Mem %</th>
+              <th>RSS MB</th>
+              <th>Threads</th>
+            </tr>
+          </thead>
+          <tbody id="proc-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    NIKTO System Monitor — refreshes every 2 s — local only
+  </footer>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
