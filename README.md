@@ -20,7 +20,7 @@ A lightweight, real-time system monitoring dashboard built with Flask and vanill
 ## Quick start
 
 ```bash
-git clone <repo>
+git clone https://github.com/Maull123es/NIKTO-System-Monitor.git
 cd nikto-monitor
 bash run.sh
 ```
@@ -177,3 +177,8 @@ nikto-monitor/
 |----------|---------------|--------------------------|
 | Flask    | `>=3.0,<4.0`  | HTTP server and routing  |
 | psutil   | `>=5.9,<7.0`  | System metrics           |
+```
+## Author
+Jana Maulana Fajar 
+```
+Made with 💕
