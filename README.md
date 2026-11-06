@@ -180,4 +180,8 @@ nikto-monitor/
 
 ## Author
 
-Jana Maulana Fajar 🤓 💕
+Jana Maulana Fajar
+
+Project: NIKTO System Monitor
+
+Built for learning, system exploration, and lightweight Linux monitoring.
